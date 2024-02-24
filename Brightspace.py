@@ -14,12 +14,23 @@ from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
+from selenium.webdriver.firefox.options import Options
 
-options = webdriver.FirefoxOptions()
-driver = webdriver.Firefox(options=options)
+#Use this for firefox
+options = Options()
 options.add_argument("-headless")
-options.add_argument('--no-sandbox')
+driver = webdriver.Firefox(options=options)
 
+
+
+#Use this for chrome
+# options = webdriver.ChromeOptions()
+# options.add_argument('--headless')
+# options.add_argument("--no-sandbox")
+# driver = webdriver.Chrome(options=options)
+
+
+#0----------------------------------------------
 # This here sets up the base url of brightspace "https://schoolspecific.brightspace.com" is the typical url base.
 # It also sets up the various buttons that need to be clicked though to get through MSFT login. 
 # the getPass import is a input that is passed to your password variable in order to keep it out of the source. 
@@ -82,11 +93,9 @@ df2 = new_df[2]
 df3 = new_df[3]
 df4 = new_df[4]
 #TODO: REMOVE THIS TRY-EXCEPT BEFORE FINAL COMMIT. 
-csv_file_folder = "./CsvFiles/"
+csv_file_folder = "./CsvFiles"
 try:
     os.mkdir(csv_file_folder)
-    
-    #Networking
     df0 = new_df[0]
     df0.to_csv("./CsvFiles/Networking.csv",index=False)
 
@@ -111,5 +120,26 @@ try:
     print(f'./CsvFiles/parent.csv already exists. Moving on...')
     pd.concat([df0,df1,df2,df3,df4], axis=1).to_csv("./CsvFiles/parent.csv", index=False)
 except FileExistsError:
-    print(f'Exiting..')
-   
+    #Networking
+    df0 = new_df[0]
+    df0.to_csv("./CsvFiles/Networking.csv",index=False)
+
+    #DATA FUND
+    df1 = new_df[1]
+    df1.to_csv("./CsvFiles/DataFund.csv",index=False)
+
+
+    #OSYS
+    df2 = new_df[2]#OSYS 
+    df2.to_csv("./CsvFiles/Osys.csv",index=False)
+
+    #WEBDEV
+    df3 = new_df[3]#
+    df3.to_csv("./CsvFiles/Webdev.csv",index=False)
+
+    #Programming  
+    df4 = new_df[4]
+    df4.to_csv("./CsvFiles/Prog.csv",index=False)
+
+    #Concatenating all dataframes to a csv file. Not super needed but helps to view the data. 
+    pd.concat([df0,df1,df2,df3,df4], axis=1).to_csv("./CsvFiles/parent.csv", index=False)
