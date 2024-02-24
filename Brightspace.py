@@ -1,8 +1,8 @@
 # Requirements:
-# Selenium: https://pypi.org/project/selenium/
-# Numpy: https://pypi.org/project/numpy/
-# Pandas: https://pypi.org/project/pandas/
-#Beautifulsoup4: https://pypi.org/project/beautifulsoup4/ 
+# Selenium: https://pypi.org/project/selenium/ pip install selenium
+# Numpy: https://pypi.org/project/numpy/ pip install numpy
+# Pandas: https://pypi.org/project/pandas/ pip install pandas
+#Beautifulsoup4: https://pypi.org/project/beautifulsoup4/ pip install bs4
 
 #-------------------------------------------------------------
 
@@ -25,7 +25,7 @@ options.add_argument('--no-sandbox')
 # the getPass import is a input that is passed to your password variable in order to keep it out of the source. 
 
 import getpass # so you don't show your password in the sourcecode
-email = 'w0499673@campus.nscc.ca'
+email = input("Enter your Email")
 base_url = 'https://nscconline.brightspace.com'
 password = getpass.getpass()
 email_field = (By.ID, 'i0116')
