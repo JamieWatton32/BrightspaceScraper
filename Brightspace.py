@@ -33,7 +33,7 @@ grades_extensions = ["/d2l/lms/grades/my_grades/main.d2l?ou=299885",
 import pandas as pd
 import io
 import os
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup as bs4
 url = []
 df = []
 new_df=[]
