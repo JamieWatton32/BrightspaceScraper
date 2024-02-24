@@ -33,6 +33,7 @@ grades_extensions = ["/d2l/lms/grades/my_grades/main.d2l?ou=299885",
 import pandas as pd
 import io
 import os
+from bs4 import BeautifulSoup
 url = []
 df = []
 new_df=[]
@@ -40,15 +41,17 @@ new_df=[]
 for each in grades_extensions:
     url = base_url + each
     driver.get(url)
-    
-    for x in url:
-        tbl = io.StringIO(driver.find_element(By.CSS_SELECTOR,".d2l-grid-wrapper").get_attribute('outerHTML'))
-        df  = pd.read_html(tbl)
+    soup = bs4(driver.page_source, 'html.parser')
+    soup = io.StringIO(str(soup))
+    df = pd.read_html(soup)
+
+  
     #This clears out the columns "Points" and "Comments and Assessments". 
     for i in df:
         i.pop("Points")
         i.pop("Comments and Assessments")
         new_df.append(i)
+
 df0 = new_df[0]
 df1 = new_df[1]
 df2 = new_df[2]
@@ -85,4 +88,4 @@ try:
     pd.concat([df0,df1,df2,df3,df4], axis=1).to_csv("./CsvFiles/parent.csv", index=False)
 except FileExistsError:
     print(f'Exiting..')
-    driver.close()
+   
