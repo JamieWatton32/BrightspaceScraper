@@ -174,6 +174,30 @@ def prog_logic():
 def main():
     osys_grades()
     Networking()
+    #Removes files off your system if yes
+    delete_files = input("Delete csv files?(y/n) ").lower()
+    if delete_files == "y":
+        os.remove("./CsvFiles/Networking.csv")
+        os.remove("./CsvFiles/Osys.csv")
+        os.remove("./CsvFiles/DataFund.csv")
+        os.remove("./CsvFiles/Webdev.csv")
+        os.remove("./CsvFiles/Prog.csv")
+        os.remove("CsvFiles/OsysQuiz1.csv")
+        os.remove("CsvFiles/OsysQuiz2.csv")
+        os.remove("CsvFiles/OsysQuiz3.csv")
+        os.remove("CsvFiles/OsysQuiz4.csv")
+        os.remove("CsvFiles/OsysQuiz5.csv")
+        os.remove("CsvFiles/OsysQuiz6.csv")
+        os.remove("CsvFiles/OsysQuiz7.csv")
+        if datetime.now() > datetime(2024,3,3,23,30):
+            os.remove("./CsvFiles/OsysQuiz8.csv")
+
+        elif datetime.now() > datetime(2024,4,7,23,30):
+            os.remove("./CsvFiles/OsysQuiz9.csv")
+
+        elif datetime.now() > datetime(2024,4,14,23,30):
+            os.remove("./CsvFiles/OsysQuiz10.csv")
+        os.removedirs('./CsvFiles')
 
 if __name__ =="__main__":
         main()

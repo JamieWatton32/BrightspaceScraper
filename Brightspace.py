@@ -18,7 +18,7 @@ from selenium.webdriver.firefox.options import Options
 
 #Use this for firefox
 options = Options()
-#options.add_argument("-headless")
+options.add_argument("-headless")
 driver = webdriver.Firefox(options=options)
 
 
@@ -62,6 +62,8 @@ grades_extensions = ["/d2l/lms/grades/my_grades/main.d2l?ou=299885",
                      "/d2l/lms/grades/my_grades/main.d2l?ou=297213"
                     ]
 from datetime import datetime
+
+#Extensions for the wuiz windows of OSYS. This is only needed since he doesn't put them into the grades window.
 windows_quiz_extensions = ['/d2l/lms/quizzing/user/quiz_submissions.d2l?qi=324825&ou=295501',#quiz 1 
                            '/d2l/lms/quizzing/user/quiz_submissions.d2l?qi=324827&ou=295501',#quiz 2
                            '/d2l/lms/quizzing/user/quiz_submissions.d2l?qi=324826&ou=295501',#quiz 3
@@ -115,101 +117,51 @@ for each in windows_quiz_extensions:
 #is easier than debugging a 100+ line file.  
 #TODO: REMOVE THIS TRY-EXCEPT BEFORE FINAL COMMIT. 
 csv_file_folder = "./CsvFiles"
-try:
-    os.mkdir(csv_file_folder)
-    
-    new_df[0].to_csv("./CsvFiles/Networking.csv",index=False)
+os.mkdir(csv_file_folder)
+#Networking
+new_df[0].to_csv("./CsvFiles/Networking.csv",index=False)
 
-    #DATA FUND
- 
-    new_df[1].to_csv("./CsvFiles/DataFund.csv",index=False)
+#DATA FUND
+new_df[1].to_csv("./CsvFiles/DataFund.csv",index=False)
 
-    #OSYS
-   
-    new_df[2].to_csv("./CsvFiles/Osys.csv",index=False)
+#OSYS
+new_df[2].to_csv("./CsvFiles/Osys.csv",index=False)
 
-    #WEBDEV
-   
-    new_df[3].to_csv("./CsvFiles/Webdev.csv",index=False)
+#WEBDEV
+new_df[3].to_csv("./CsvFiles/Webdev.csv",index=False)
 
-    #Programming  
-   
-    new_df[4].to_csv("./CsvFiles/Prog.csv",index=False)
+#Programming  
+new_df[4].to_csv("./CsvFiles/Prog.csv",index=False)
 
-    
-    new_df[5].to_csv("./CsvFiles/OsysQuiz1.csv",index=False)
+#Osys quiz 1
+new_df[5].to_csv("./CsvFiles/OsysQuiz1.csv",index=False)
 
-    
-    new_df[6].to_csv("./CsvFiles/OsysQuiz2.csv",index=False)
+#Osys quiz 2
+new_df[6].to_csv("./CsvFiles/OsysQuiz2.csv",index=False)
 
-   
-    new_df[7].to_csv("./CsvFiles/OsysQuiz3.csv",index=False)
+#Osys quiz 3
+new_df[7].to_csv("./CsvFiles/OsysQuiz3.csv",index=False)
 
-    
-    new_df[8].to_csv("./CsvFiles/OsysQuiz4.csv",index=False)
+#Osys quiz 4
+new_df[8].to_csv("./CsvFiles/OsysQuiz4.csv",index=False)
 
-    new_df[9].to_csv("./CsvFiles/OsysQuiz5.csv",index=False)
-    
-  
-    new_df[10].to_csv("./CsvFiles/OsysQuiz6.csv",index=False)
+#Osys quiz 5
+new_df[9].to_csv("./CsvFiles/OsysQuiz5.csv",index=False)
 
-    
-    new_df[11].to_csv("./CsvFiles/OsysQuiz7.csv",index=False)
+#Osys quiz 6
+new_df[10].to_csv("./CsvFiles/OsysQuiz6.csv",index=False)
 
-    if datetime.now() > datetime(2024,3,3,23,30):
-        new_df[12].to_csv("./CsvFiles/OsysQuiz8.csv",index=False)
+#Osys quiz 7
+new_df[11].to_csv("./CsvFiles/OsysQuiz7.csv",index=False)
 
-    elif datetime.now() > datetime(2024,4,7,23,30):
-        new_df[13].to_csv("./CsvFiles/OsysQuiz9.csv",index=False)
+if datetime.now() > datetime(2024,3,3,23,30):
+    #Osys quiz 8
+    new_df[12].to_csv("./CsvFiles/OsysQuiz8.csv",index=False)
 
-    elif datetime.now() > datetime(2024,4,14,23,30):
-        new_df[14].to_csv("./CsvFiles/OsysQuiz10.csv",index=False)
+elif datetime.now() > datetime(2024,4,7,23,30):
+    #Osys quiz 9
+    new_df[13].to_csv("./CsvFiles/OsysQuiz9.csv",index=False)
 
-except FileExistsError:
-    new_df[0].to_csv("./CsvFiles/Networking.csv",index=False)
-
-    #DATA FUND
-    
-    new_df[1].to_csv("./CsvFiles/DataFund.csv",index=False)
-
-    #OSYS
-   
-    new_df[2].to_csv("./CsvFiles/Osys.csv",index=False)
-
-    #WEBDEV
-   
-    new_df[3].to_csv("./CsvFiles/Webdev.csv",index=False)
-
-    #Programming  
-   
-    new_df[4].to_csv("./CsvFiles/Prog.csv",index=False)
-
-    
-    new_df[5].to_csv("./CsvFiles/OsysQuiz1.csv",index=False)
-
-    
-    new_df[6].to_csv("./CsvFiles/OsysQuiz2.csv",index=False)
-
-   
-    new_df[7].to_csv("./CsvFiles/OsysQuiz3.csv",index=False)
-
-    
-    new_df[8].to_csv("./CsvFiles/OsysQuiz4.csv",index=False)
-
-    new_df[9].to_csv("./CsvFiles/OsysQuiz5.csv",index=False)
-    
-  
-    new_df[10].to_csv("./CsvFiles/OsysQuiz6.csv",index=False)
-
-    
-    new_df[11].to_csv("./CsvFiles/OsysQuiz7.csv",index=False)
-
-    if datetime.now() > datetime(2024,3,3,23,30):
-        new_df[12].to_csv("./CsvFiles/OsysQuiz8.csv",index=False)
-
-    elif datetime.now() > datetime(2024,4,7,23,30):
-        new_df[13].to_csv("./CsvFiles/OsysQuiz9.csv",index=False)
-
-    elif datetime.now() > datetime(2024,4,14,23,30):
-        new_df[14].to_csv("./CsvFiles/OsysQuiz10.csv",index=False)
-
+elif datetime.now() > datetime(2024,4,14,23,30):
+    #Osys quiz 10
+    new_df[14].to_csv("./CsvFiles/OsysQuiz10.csv",index=False)
