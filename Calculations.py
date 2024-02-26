@@ -21,7 +21,7 @@ df3= pd.read_csv(web_file)#Web development
 df4 = pd.read_csv(prog_file)#Programming
 
 
-#This function  
+#This function calculates the total contribution of the quiz grades for OSYS 
 def osys_quiz() -> float:
     osys_quizzies =[pd.read_csv('./CsvFiles/OsysQuiz1.csv').to_numpy(),
                     pd.read_csv('./CsvFiles/OsysQuiz2.csv').to_numpy(),
@@ -73,10 +73,13 @@ def osys_grades() -> float:
     Actual = 0
     Actual = current_grade['Assignments'] + current_grade["Final Project"] +current_grade["Quizzies"] 
     print(f'Your current grade in OSYS is {Actual}%')
-#put stuff here           
-def Networking():
+
+
+#TODO: Refactor this. Its very messy and readability isn't great
+#This function takes the networkign array and scales grade interpolates the grades to their absolute value
+#instead of it having the weird dyanmically updating scale that brightspace is doing        
+def Networking() -> float:
     df_netw = df0.to_numpy()
-    netw_dict = {}
     grades = []
     current_grade_before = []
     current_total=[]
@@ -89,9 +92,9 @@ def Networking():
     midterm_poss=[]
     final_poss=[]
 
-   
+   #This cleans out the rows that cannot be interpolated and extracts the ones that can into their own list. 
     for i in df_netw:
-        if i[1] == "Weekly Assignments":# or i[1] != 'Weekly Quizzes': or i[1] !='Midterm Test' or i[1] !='Final Exam':
+        if i[1] == "Weekly Assignments":
             continue
         elif i[1] == 'Weekly Quizzes':
             continue
@@ -101,7 +104,11 @@ def Networking():
             continue
         else:
             grades.append((i[2]).split('/'))
-    del grades[-1]        
+
+    del grades[-1]#Just deleting the "bonus grade" on the bottom.     
+
+    #This turns separates the received mark and the possible mark for each item. 
+    #If the item is empty then the "-" is converted to 0 in order to add it to the total 
     for each in grades:
         if each[0] == '- ':
            each[0] = 0
@@ -109,7 +116,8 @@ def Networking():
         current_grade_before.append(float(each[0]))
         current_total.append(float(each[1]))
 
-    
+    #This loop further splits the currently recived grades into respective lists for assignments, quizzes, midterm, and the final.
+    #Done by using a counting value
     count = 0
     for i in current_grade_before:
         if count <= 5:
@@ -121,6 +129,9 @@ def Networking():
         elif count == 13:
             final_current.append(i)
         count +=1
+
+    #This loop further splits the currently recived grades into respective lists for assignments, quizzes, midterm, and the final.
+    #Done by using a counting value    
     count = 0
     for i in current_total:
         if count <= 5:
@@ -133,6 +144,9 @@ def Networking():
             final_poss.append(i)
         count +=1
     
+
+    #This block does the interpolation of the assignment and quizzes from the dyanmic scale to the static scale.
+    #TODO: clean this up. Maybe do both at same time?
     assign_worth_each = 8
     actual_grades = []
     count=0
@@ -144,7 +158,6 @@ def Networking():
             actual_grades.append(0)
         count+=1
     
-    
     count=0
     quiz_worth_each = 2
     for i in quiz_current:
@@ -153,13 +166,19 @@ def Networking():
             actual_grades.append(i)
         except ZeroDivisionError:
             actual_grades.append(0) 
+
+    #appending the midterm and final grades to the list since they are already fine
     actual_grades.append(midterm_current[0])
     actual_grades.append(final_current[0])
+
+    #This just sums all the elements into a total variable
     total = 0
     for i in actual_grades:
         total +=i
     total = total 
-    print(f'Your current grade in networking is: {total:.2f}%')
+    #returns your Networking grade. 
+    return total
+    
     
 #put stuff here 
 def data_fundamentals():
@@ -173,7 +192,7 @@ def prog_logic():
 
 def main():
     osys_grades()
-    Networking()
+    print(f'Your current grade in networking is: {Networking():.2f}%')
     #Removes files off your system if yes
     delete_files = input("Delete csv files?(y/n) ").lower()
     if delete_files == "y":
