@@ -72,7 +72,7 @@ def osys_grades() -> float:
         }
     Actual = 0
     Actual = current_grade['Assignments'] + current_grade["Final Project"] +current_grade["Quizzies"] 
-    print(f'Your current grade in OSYS is {Actual}')
+    print(f'Your current grade in OSYS is {Actual}%')
 #put stuff here           
 def Networking():
     df_netw = df0.to_numpy()
@@ -84,6 +84,10 @@ def Networking():
     quiz_current = []
     midterm_current = []
     final_current =[]
+    assign_poss = []
+    quiz_poss = []
+    midterm_poss=[]
+    final_poss=[]
 
    
     for i in df_netw:
@@ -104,7 +108,6 @@ def Networking():
            each[1] = 0
         current_grade_before.append(float(each[0]))
         current_total.append(float(each[1]))
-    print(current_total)
 
     
     count = 0
@@ -119,20 +122,44 @@ def Networking():
             final_current.append(i)
         count +=1
     count = 0
-    for i in current_grade_before:
+    for i in current_total:
         if count <= 5:
-            assign_current.append(i)
+            assign_poss.append(i)
         elif count > 5 and count <=11:
-            quiz_current.append(i)
+            quiz_poss.append(i)
         elif count == 12:
-            midterm_current.append(i)
+            midterm_poss.append(i)
         elif count == 13:
-            final_current.append(i)
+            final_poss.append(i)
         count +=1
-
+    
     assign_worth_each = 8
+    actual_grades = []
+    count=0
     for i in assign_current:
-        i = assign_worth_each*i
+        try:
+            i = assign_worth_each*i/assign_poss[count]
+            actual_grades.append(i)
+        except ZeroDivisionError:
+            actual_grades.append(0)
+        count+=1
+    
+    
+    count=0
+    quiz_worth_each = 2
+    for i in quiz_current:
+        try:
+            i = quiz_worth_each*i/assign_poss[count]
+            actual_grades.append(i)
+        except ZeroDivisionError:
+            actual_grades.append(0) 
+    actual_grades.append(midterm_current[0])
+    actual_grades.append(final_current[0])
+    total = 0
+    for i in actual_grades:
+        total +=i
+    total = total 
+    print(f'Your current grade in networking is: {total:.2f}%')
     
 #put stuff here 
 def data_fundamentals():
