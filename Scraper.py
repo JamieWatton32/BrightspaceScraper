@@ -165,3 +165,4 @@ elif datetime.now() > datetime(2024,4,7,23,30):
 elif datetime.now() > datetime(2024,4,14,23,30):
     #Osys quiz 10
     new_df[14].to_csv("./CsvFiles/OsysQuiz10.csv",index=False)
+driver.close()
