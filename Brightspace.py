@@ -18,7 +18,7 @@ from selenium.webdriver.firefox.options import Options
 
 #Use this for firefox
 options = Options()
-options.add_argument("-headless")
+#options.add_argument("-headless")
 driver = webdriver.Firefox(options=options)
 
 
@@ -61,6 +61,24 @@ grades_extensions = ["/d2l/lms/grades/my_grades/main.d2l?ou=299885",
                      "/d2l/lms/grades/my_grades/main.d2l?ou=295683",
                      "/d2l/lms/grades/my_grades/main.d2l?ou=297213"
                     ]
+from datetime import datetime
+windows_quiz_extensions = ['/d2l/lms/quizzing/user/quiz_submissions.d2l?qi=324825&ou=295501',#quiz 1 
+                           '/d2l/lms/quizzing/user/quiz_submissions.d2l?qi=324827&ou=295501',#quiz 2
+                           '/d2l/lms/quizzing/user/quiz_submissions.d2l?qi=324826&ou=295501',#quiz 3
+                           '/d2l/lms/quizzing/user/quiz_submissions.d2l?qi=324828&ou=295501',#quiz 4
+                           '/d2l/lms/quizzing/user/quiz_submissions.d2l?qi=324832&ou=295501',#quiz 5
+                           '/d2l/lms/quizzing/user/quiz_submissions.d2l?qi=324830&ou=295501',#quiz 6
+                           '/d2l/lms/quizzing/user/quiz_submissions.d2l?qi=324829&ou=295501',#quiz 7
+                        ]
+
+
+if datetime.now() > datetime(2024,3,3,23,30):
+    windows_quiz_extensions.append('/d2l/lms/quizzing/user/quiz_submissions.d2l?qi=324831&ou=295501')#quiz 8
+elif datetime.now() > datetime(2024,4,7,23,30):
+    windows_quiz_extensions.append('/d2l/lms/quizzing/user/quiz_submissions.d2l?qi=324833&ou=295501')#quiz 9
+elif datetime.now() > datetime(2024,4,14,23,30):
+    windows_quiz_extensions.append('/d2l/lms/quizzing/user/quiz_submissions.d2l?qi=324834&ou=295501')#quiz 10
+
 import pandas as pd
 import io
 import os
@@ -82,64 +100,116 @@ for each in grades_extensions:
         i.pop("Points")
         i.pop("Comments and Assessments")
         new_df.append(i)
-
+        
+for each in windows_quiz_extensions:
+    url = base_url + each
+    driver.get(url)
+    soup = bs4(driver.page_source, 'html.parser')
+    soup = io.StringIO(str(soup))
+    df = pd.read_html(soup)
+    for i in df:
+        new_df.append(i)
 
 #Here the cleaned dataframes are broken up and are written to a csv respectively.This doesn't have to be done
 #but this file is getting long and reading a csv for each class in another .py file 
 #is easier than debugging a 100+ line file.  
-df0 = new_df[0]
-df1 = new_df[1]
-df2 = new_df[2]
-df3 = new_df[3]
-df4 = new_df[4]
 #TODO: REMOVE THIS TRY-EXCEPT BEFORE FINAL COMMIT. 
 csv_file_folder = "./CsvFiles"
 try:
     os.mkdir(csv_file_folder)
-    df0 = new_df[0]
-    df0.to_csv("./CsvFiles/Networking.csv",index=False)
+    
+    new_df[0].to_csv("./CsvFiles/Networking.csv",index=False)
 
     #DATA FUND
-    df1 = new_df[1]
-    df1.to_csv("./CsvFiles/DataFund.csv",index=False)
-
+ 
+    new_df[1].to_csv("./CsvFiles/DataFund.csv",index=False)
 
     #OSYS
-    df2 = new_df[2]#OSYS 
-    df2.to_csv("./CsvFiles/Osys.csv",index=False)
+   
+    new_df[2].to_csv("./CsvFiles/Osys.csv",index=False)
 
     #WEBDEV
-    df3 = new_df[3]#
-    df3.to_csv("./CsvFiles/Webdev.csv",index=False)
+   
+    new_df[3].to_csv("./CsvFiles/Webdev.csv",index=False)
 
     #Programming  
-    df4 = new_df[4]
-    df4.to_csv("./CsvFiles/Prog.csv",index=False)
+   
+    new_df[4].to_csv("./CsvFiles/Prog.csv",index=False)
 
-    #Concatenating all dataframes to a csv file. Not super needed but helps to view the data. 
-    print(f'./CsvFiles/parent.csv already exists. Moving on...')
-    pd.concat([df0,df1,df2,df3,df4], axis=1).to_csv("./CsvFiles/parent.csv", index=False)
+    
+    new_df[5].to_csv("./CsvFiles/OsysQuiz1.csv",index=False)
+
+    
+    new_df[6].to_csv("./CsvFiles/OsysQuiz2.csv",index=False)
+
+   
+    new_df[7].to_csv("./CsvFiles/OsysQuiz3.csv",index=False)
+
+    
+    new_df[8].to_csv("./CsvFiles/OsysQuiz4.csv",index=False)
+
+    new_df[9].to_csv("./CsvFiles/OsysQuiz5.csv",index=False)
+    
+  
+    new_df[10].to_csv("./CsvFiles/OsysQuiz6.csv",index=False)
+
+    
+    new_df[11].to_csv("./CsvFiles/OsysQuiz7.csv",index=False)
+
+    if datetime.now() > datetime(2024,3,3,23,30):
+        new_df[12].to_csv("./CsvFiles/OsysQuiz8.csv",index=False)
+
+    elif datetime.now() > datetime(2024,4,7,23,30):
+        new_df[13].to_csv("./CsvFiles/OsysQuiz9.csv",index=False)
+
+    elif datetime.now() > datetime(2024,4,14,23,30):
+        new_df[14].to_csv("./CsvFiles/OsysQuiz10.csv",index=False)
+
 except FileExistsError:
-    #Networking
-    df0 = new_df[0]
-    df0.to_csv("./CsvFiles/Networking.csv",index=False)
+    new_df[0].to_csv("./CsvFiles/Networking.csv",index=False)
 
     #DATA FUND
-    df1 = new_df[1]
-    df1.to_csv("./CsvFiles/DataFund.csv",index=False)
-
+    
+    new_df[1].to_csv("./CsvFiles/DataFund.csv",index=False)
 
     #OSYS
-    df2 = new_df[2]#OSYS 
-    df2.to_csv("./CsvFiles/Osys.csv",index=False)
+   
+    new_df[2].to_csv("./CsvFiles/Osys.csv",index=False)
 
     #WEBDEV
-    df3 = new_df[3]#
-    df3.to_csv("./CsvFiles/Webdev.csv",index=False)
+   
+    new_df[3].to_csv("./CsvFiles/Webdev.csv",index=False)
 
     #Programming  
-    df4 = new_df[4]
-    df4.to_csv("./CsvFiles/Prog.csv",index=False)
+   
+    new_df[4].to_csv("./CsvFiles/Prog.csv",index=False)
 
-    #Concatenating all dataframes to a csv file. Not super needed but helps to view the data. 
-    pd.concat([df0,df1,df2,df3,df4], axis=1).to_csv("./CsvFiles/parent.csv", index=False)
+    
+    new_df[5].to_csv("./CsvFiles/OsysQuiz1.csv",index=False)
+
+    
+    new_df[6].to_csv("./CsvFiles/OsysQuiz2.csv",index=False)
+
+   
+    new_df[7].to_csv("./CsvFiles/OsysQuiz3.csv",index=False)
+
+    
+    new_df[8].to_csv("./CsvFiles/OsysQuiz4.csv",index=False)
+
+    new_df[9].to_csv("./CsvFiles/OsysQuiz5.csv",index=False)
+    
+  
+    new_df[10].to_csv("./CsvFiles/OsysQuiz6.csv",index=False)
+
+    
+    new_df[11].to_csv("./CsvFiles/OsysQuiz7.csv",index=False)
+
+    if datetime.now() > datetime(2024,3,3,23,30):
+        new_df[12].to_csv("./CsvFiles/OsysQuiz8.csv",index=False)
+
+    elif datetime.now() > datetime(2024,4,7,23,30):
+        new_df[13].to_csv("./CsvFiles/OsysQuiz9.csv",index=False)
+
+    elif datetime.now() > datetime(2024,4,14,23,30):
+        new_df[14].to_csv("./CsvFiles/OsysQuiz10.csv",index=False)
+
