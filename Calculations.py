@@ -6,7 +6,7 @@ import pandas as pd
 import os
 
 if os.path.isdir("./CsvFiles") == False:
-    import Brightspace
+    import Scraper
 
 #Storing each file path as a string to help with readability
 networking_file = "./CsvFiles/Networking.csv"
