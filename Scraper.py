@@ -115,7 +115,6 @@ for each in windows_quiz_extensions:
 #Here the cleaned dataframes are broken up and are written to a csv respectively.This doesn't have to be done
 #but this file is getting long and reading a csv for each class in another .py file 
 #is easier than debugging a 100+ line file.  
-#TODO: REMOVE THIS TRY-EXCEPT BEFORE FINAL COMMIT. 
 csv_file_folder = "./CsvFiles"
 os.mkdir(csv_file_folder)
 #Networking
