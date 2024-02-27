@@ -41,7 +41,6 @@ def osys_quiz() -> float:
     total_grade = sum(grades)
     return total_grade
 
-
 def osys_grades() -> float:
     df1 = pd.read_csv(osys_file)#Osys
     df_osys = df1.to_numpy()
@@ -51,6 +50,27 @@ def osys_grades() -> float:
     
     return current_grade[0] +current_grade[1]+ current_grade[2]
 
+
+#data fundamentals grades
+def data_fundamentals()-> float:
+    df2 = pd.read_csv(datafund_file)#Data fundamentals
+    df_data = df2.to_numpy()
+    grades = [each[2].split('/')[0] for each in df_data if each[1] in ["Assignments","Quizzes", "In-Class Activities",'Tech Checks']]    
+    return sum(float(grade) for grade in grades)
+   
+#web dev grades
+def web_dev()-> float:
+    df3= pd.read_csv(web_file)#Web development
+    df_web = df3.to_numpy()
+    grades = [each[2].split('/')[0] for each in df_web if each[1] in ["Assignments","Practicals","Final Project","Quizzes"]]
+    return sum(float(grade) for grade in grades)
+    
+#programming grades 
+def prog_logic()-> float:
+    df4 = pd.read_csv(prog_file)#Programming 
+    df_prog = df4.to_numpy()
+    grades = [each[2].split('/')[0] for each in df_prog if each[1] in ["Assignments", "Tech Checks", "Final Project", "Quizzes (in-class exercises)"]]
+    return sum(float(grade) for grade in grades)
 
 
 #This function takes the networking array and scales grade interpolates the grades to a static scale that doesn't change as he grades stuff
@@ -97,7 +117,6 @@ def Networking() -> float:
     
 
     #This block does the interpolation of the assignment and quizzes from the dyanmic scale to the static scale.
-    #TODO: clean this up. Maybe do both at same time?
     assign_worth_each = 8
     actual_grades = []
     count=0
@@ -120,28 +139,6 @@ def Networking() -> float:
 
     #returns your Networking grade. 
     return sum(actual_grades) + midterm_current +final_current  
-    
-#data fundamentals grades
-def data_fundamentals()-> float:
-    df2 = pd.read_csv(datafund_file)#Data fundamentals
-    df_data = df2.to_numpy()
-    grades = [each[2].split('/')[0] for each in df_data if each[1] in ["Assignments","Quizzes", "In-Class Activities",'Tech Checks']]    
-    return sum(float(grade) for grade in grades)
-   
-#web dev grades
-def web_dev()-> float:
-    df3= pd.read_csv(web_file)#Web development
-    df_web = df3.to_numpy()
-    grades = [each[2].split('/')[0] for each in df_web if each[1] in ["Assignments","Practicals","Final Project","Quizzes"]]
-    return sum(float(grade) for grade in grades)
-    
-#programming grades 
-def prog_logic()-> float:
-    df4 = pd.read_csv(prog_file)#Programming 
-    df_prog = df4.to_numpy()
-    grades = [each[2].split('/')[0] for each in df_prog if each[1] in ["Assignments", "Tech Checks", "Final Project", "Quizzes (in-class exercises)"]]
-    return sum(float(grade) for grade in grades)
-
    
 
 def main():
