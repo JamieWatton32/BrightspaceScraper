@@ -4,9 +4,10 @@ from datetime import datetime
 import numpy as np
 import pandas as pd
 import os
+from Scraper import Scraper
 
 if os.path.isdir("./CsvFiles") == False:
-    import Scraper
+    Scraper()
 
 #Storing each file path as a string to help with readability
 networking_file = "./CsvFiles/Networking.csv"
