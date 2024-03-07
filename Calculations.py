@@ -79,13 +79,10 @@ def prog_logic()-> float:
 def Networking() -> float:
     df0 = pd.read_csv(networking_file)#Networking
     df_netw = df0.to_numpy()
-    grades = []
-    current_grade_before = []
-    current_total=[]
-    assign_current = []
-    quiz_current = []
+    
     assign_quiz_poss = []
     #This cleans out the rows that cannot be interpolated and extracts the ones that can into their own list. 
+    grades = []
     for col in df_netw:
         if col[1] not in ['Weekly Assignments', 'Weekly Quizzes', 'Midterm Test']:
             grades.append((col[2]).split('/'))
@@ -94,6 +91,8 @@ def Networking() -> float:
 
     #This turns separates the received mark and the possible mark for each item. 
     #If the item is empty then the "-" is converted to 0 in order to add it to the total 
+    current_grade_before = []
+    current_total=[]
     for each in grades:
         if each[0] == '- ':
            each[0] = 0
@@ -105,13 +104,15 @@ def Networking() -> float:
     final_current=current_grade_before[13]#setting final grade since the list will be broken up later
 
     count = 0
+    assign_current = []
+    quiz_current = []
     for i in current_grade_before:
         if count <= 5:
             assign_current.append(i)
         elif  count <=11:
             quiz_current.append(i)
         count +=1
-    
+    assign_quiz_poss = []
     #This creates a possible list for assignment grades
     for count in range(0,11):
         assign_quiz_poss.append(current_total[count])
@@ -137,6 +138,7 @@ def Networking() -> float:
             actual_grades.append(grade)
         except ZeroDivisionError:
             continue
+        count+=1
 
     #returns your Networking grade. 
     return sum(actual_grades) + midterm_current +final_current  
